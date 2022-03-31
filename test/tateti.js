@@ -41,4 +41,28 @@ describe("Juego de TaTeTi", () => {
             })
         });
     });
+    describe("El primer jugador hace su primer movimiento", () => {
+        it("El casillero queda ocupado y le toca al otro jugador", (done) => {
+            chai.request(server)
+                .put("/empezar")
+                .send({ jugadores: ['Juan', 'Pedro'] })
+                .end();
+
+            chai.request(server)
+                .put("/movimiento")
+                .send({ jugador: 'Juan', columna: 0, fila: 0 })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.should.to.be.json;
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('turno').eql('Pedro');
+                    res.body.should.have.property('tablero').eql([
+                        ['x', ' ', ' '],
+                        [' ', ' ', ' '],
+                        [' ', ' ', ' '],
+                    ]);
+                    done()
+                });
+        });
+    });    
 });
