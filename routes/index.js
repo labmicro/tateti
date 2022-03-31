@@ -15,4 +15,13 @@ router.put('/empezar', function (request, response) {
   ]});
 });
 
+router.put('/movimiento', function (request, response) {
+  response.setHeader('Content-Type', 'application/json');  
+  response.send({turno: 'Pedro', tablero: [
+    ['x', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+  ]});
+});
+
 module.exports = router;
