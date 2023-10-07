@@ -1,0 +1,35 @@
+@startuml
+hide footbox
+skinparam sequenceMessageAlign left
+skinparam responseMessageBelowArrow true
+
+group inicialización
+||10||
+pedro -> servidor: put /empezar { jugadores: [juan, pedro] }
+pedro <-- servidor: status 200 { turno: juan,\n    tablero: [ [ , , ], [ , , ], [ , , ] ]\n}
+||10||
+end
+
+group movimiento
+||10||
+juan -> servidor: put /movimiento {\n    jugador: juan, columna: 0, fila: 0\n}
+juan <-- servidor: status 200 { turno: pedro,\n    tablero: [ [x, , ], [ , , ], [ , , ] ]\n}
+||10||
+end
+
+group movimiento
+||10||
+pedro -> servidor: put /movimiento {\n    jugador: pedro, columna: 1, fila: 0\n}
+pedro <-- servidor: status 200 { turno: pedro,\n    tablero: [ [x,o, ], [ , , ], [ , , ] ] \n}
+||10||
+end
+
+... ...
+
+group finalizacion
+||10||
+juan -> servidor: put /movimiento {\n    jugador: juan, columna: 0, fila: 2\n}
+juan <-- servidor: status 200 { ganador: juan,\n    tablero: [ [x,o, ], [x,o, ], [x, , ] ]\n}
+||10||
+end
+@enduml
