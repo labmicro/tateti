@@ -48,6 +48,22 @@ describe("Juego de TaTeTi", () => {
   //    | o | o
   //    |   |
 
+  const movimientoGanaDiagonal = [
+    {
+      jugador: "Juan",
+      columna: 0,
+      fila: 0,
+    },
+    { jugador: "Pedro", columna: 0, fila: 1 },
+    { jugador: "Juan", columna: 1, fila: 1 },
+    { jugador: "Pedro", columna: 0, fila: 2 },
+    { jugador: "Juan", columna: 2, fila: 2 },
+    // Tablero:
+    // x |   |
+    // o | x |
+    // o |   | x
+  ];
+
   describe("Se empieza un juego nuevo", () => {
     it("Todos los casilleros estan vacios y le toca mover al primer jugador", (done) => {
       chai
@@ -154,8 +170,47 @@ describe("Juego de TaTeTi", () => {
           res.body.should.have.property("ganador").eql("Juan");
           res.body.should.have.property("tablero").eql([
             ["x", "x", "x"],
-            [" ", "o", " "],
-            [" ", " ", "o"],
+            [" ", "o", "o"],
+            [" ", " ", " "],
+          ]);
+          done();
+        });
+    });
+    it("El juego termina con una diagonal con tres valores iguales", (done) => {
+      chai.request(server).put("/empezar").send(juego).end();
+      chai
+        .request(server)
+        .put("/movimiento")
+        .send(movimientoGanaDiagonal[0])
+        .end();
+      chai
+        .request(server)
+        .put("/movimiento")
+        .send(movimientoGanaDiagonal[1])
+        .end();
+      chai
+        .request(server)
+        .put("/movimiento")
+        .send(movimientoGanaDiagonal[2])
+        .end();
+      chai
+        .request(server)
+        .put("/movimiento")
+        .send(movimientoGanaDiagonal[3])
+        .end();
+      chai
+        .request(server)
+        .put("/movimiento")
+        .send(movimientoGanaDiagonal[4])
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.to.be.json;
+          res.body.should.be.a("object");
+          res.body.should.have.property("ganador").eql("Juan");
+          res.body.should.have.property("tablero").eql([
+            ["x", " ", " "],
+            ["o", "x", " "],
+            ["o", " ", "x"],
           ]);
           done();
         });

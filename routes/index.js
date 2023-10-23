@@ -10,17 +10,52 @@ const marcas = ["x", "o"];
 function buscarGanador() {
   var ganador;
   var iguales;
-  for (var indice = 0; indice < 3; indice++) {
+
+  // Verificar filas
+  for (var fila = 0; fila < 3; fila++) {
     iguales = true;
-    for (var celda = 0; celda < 3; celda++) {
-      iguales = iguales && tablero[celda][indice] == marcas[turno];
+    for (var columna = 0; columna < 3; columna++) {
+      iguales = iguales && tablero[fila][columna] == marcas[turno];
     }
     if (iguales) {
       ganador = turno;
-      break;
+      return ganador;
     }
   }
-  return ganador;
+
+  // Verificar columnas
+  for (var columna = 0; columna < 3; columna++) {
+    iguales = true;
+    for (var fila = 0; fila < 3; fila++) {
+      iguales = iguales && tablero[fila][columna] == marcas[turno];
+    }
+    if (iguales) {
+      ganador = turno;
+      return ganador;
+    }
+  }
+
+  // Verificar diagonal principal
+  iguales = true;
+  for (var i = 0; i < 3; i++) {
+    iguales = iguales && tablero[i][i] == marcas[turno];
+  }
+  if (iguales) {
+    ganador = turno;
+    return ganador;
+  }
+
+  // Verificar diagonal secundaria
+  iguales = true;
+  for (var i = 0; i < 3; i++) {
+    iguales = iguales && tablero[i][2 - i] == marcas[turno];
+  }
+  if (iguales) {
+    ganador = turno;
+    return ganador;
+  }
+
+  return ganador; // Devolver ganador o undefined si no hay ganador
 }
 
 /* GET home page. */
