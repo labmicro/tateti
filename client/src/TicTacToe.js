@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Square from "./Square";
 import EndGame from "./EndGame";
+import { empezar } from "./apiCalls";
 const INITIAL = "";
 const X_PLAYER = "X";
 const O_PLAYER = "O";
@@ -23,6 +24,7 @@ const TicTacToe = () => {
     setGrid(Array(9).fill(INITIAL));
     setGameFinished(false);
     setDraw(false);
+    empezar();
   };
   const handleClick = (id) => {
     setGrid(

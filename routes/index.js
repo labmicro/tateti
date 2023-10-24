@@ -60,20 +60,23 @@ function buscarGanador() {
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Express listening" });
 });
 
 router.put("/empezar", function (request, response) {
   turno = 0;
-  jugadores = request.body.jugadores;
-  tablero = [
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "],
-  ];
-
-  response.setHeader("Content-Type", "application/json");
-  response.send({ turno: jugadores[turno], tablero: tablero });
+  try {
+    jugadores = request.body.jugadores;
+    tablero = [
+      [" ", " ", " "],
+      [" ", " ", " "],
+      [" ", " ", " "],
+    ];
+    response.setHeader("Content-Type", "application/json");
+    response.send({ turno: jugadores[turno], tablero: tablero });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.put("/movimiento", function (request, response) {
