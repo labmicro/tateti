@@ -15,6 +15,7 @@ const TicTacToe = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (isLoaded) return;
       await empezar([O_PLAYER_NAME, X_PLAYER_NAME]);
       setIsLoaded(true);
     };
@@ -36,7 +37,6 @@ const TicTacToe = () => {
   };
   const isGameOver = (result) => {
     if (!gameFinished) {
-      console.log("Ganador: ", result);
       if (result.ganador) {
         setGameFinished(true);
       }
@@ -50,7 +50,7 @@ const TicTacToe = () => {
   return (
     <div>
       <div className="player-turn">
-        Turn player: {player ? X_PLAYER_NAME : O_PLAYER_NAME}
+        Turno del jugador: {player ? X_PLAYER_NAME : O_PLAYER_NAME}
       </div>
       {gameFinished && (
         <EndGame

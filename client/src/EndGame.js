@@ -3,12 +3,12 @@ const EndGame = ({ newGame, player, draw, X_PLAYER, O_PLAYER }) => {
     <div className="end-game-screen">
       {!draw && (
         <span className="win-text">
-          Player {player ? O_PLAYER : X_PLAYER} Win!
+          El jugador {player ? O_PLAYER : X_PLAYER} gano!
         </span>
       )}
       {draw && <span className="win-text">Draw</span>}
       <button className="btn" onClick={newGame}>
-        New Game
+        Nuevo Juego
       </button>
     </div>
   );

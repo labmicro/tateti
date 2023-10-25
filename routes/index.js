@@ -55,6 +55,8 @@ function buscarGanador() {
     return ganador;
   }
 
+  // TODO: Verificar empate
+
   return ganador; // Devolver ganador o undefined si no hay ganador
 }
 
