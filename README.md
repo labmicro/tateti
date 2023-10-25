@@ -16,7 +16,7 @@ npm install express-generator -g
 express --no-view  --git tateti
 ```
 
-2. Instalar las herramientas de testing 
+2. Instalar las herramientas de testing
 
 ```
 npm install --save-dev mocha chai nyc chai-http
@@ -36,4 +36,21 @@ npm install --save-dev mocha chai nyc chai-http
 
 ```
 npm test
+```
+
+## Ejecucion de los servidores
+
+### Luego de clonar el repositorio ejecutar para inicializar el frontend:
+
+```
+cd client
+npm install
+npm start
+```
+
+### En otra terminal ejecutar para inicializar el backend:
+
+```
+npm install
+npm start
 ```
