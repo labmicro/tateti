@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Square from "./Square";
 import EndGame from "./EndGame";
-import { empezar } from "./apiCalls";
+import { empezar, movimiento } from "./apiCalls";
 const INITIAL = "";
 const X_PLAYER = "X";
 const O_PLAYER = "O";
+const X_PLAYER_NAME = "Juan";
+const O_PLAYER_NAME = "Pedro";
+
 const winCombination = [
   [0, 1, 2],
   [3, 4, 5],
@@ -20,13 +23,26 @@ const TicTacToe = () => {
   const [player, setPlayer] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [draw, setDraw] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await empezar([O_PLAYER_NAME, O_PLAYER_NAME]);
+      setIsLoaded(true);
+    };
+    fetchData();
+  }, [isLoaded]);
+
   const newGame = () => {
     setGrid(Array(9).fill(INITIAL));
     setGameFinished(false);
     setDraw(false);
-    empezar();
+    empezar([O_PLAYER_NAME, O_PLAYER_NAME]);
   };
-  const handleClick = (id) => {
+
+  const handleClick = async (id) => {
+    const result = await movimiento(id % 3, Math.floor(id / 3));
+    isGameOver(result);
     setGrid(
       grid.map((item, index) => {
         if (index === id) {
@@ -42,27 +58,11 @@ const TicTacToe = () => {
     );
     setPlayer(!player);
   };
-  const isGameOver = () => {
+  const isGameOver = (result) => {
     if (!gameFinished) {
-      for (let i = 0; i < 8; i++) {
-        if (
-          grid[winCombination[i][0]] === X_PLAYER &&
-          grid[winCombination[i][1]] === X_PLAYER &&
-          grid[winCombination[i][2]] === X_PLAYER
-        ) {
-          setGameFinished(true);
-          return;
-        }
-      }
-      for (let i = 0; i < 8; i++) {
-        if (
-          grid[winCombination[i][0]] === O_PLAYER &&
-          grid[winCombination[i][1]] === O_PLAYER &&
-          grid[winCombination[i][2]] === O_PLAYER
-        ) {
-          setGameFinished(true);
-          return;
-        }
+      console.log("Ganador: ", result);
+      if (result.ganador) {
+        setGameFinished(true);
       }
       if (!grid.includes(INITIAL)) {
         setDraw(true);
@@ -70,20 +70,19 @@ const TicTacToe = () => {
       }
     }
   };
-  isGameOver();
 
   return (
     <div>
       <div className="player-turn">
-        Turn player: {player ? X_PLAYER : O_PLAYER}
+        Turn player: {player ? X_PLAYER_NAME : O_PLAYER_NAME}
       </div>
       {gameFinished && (
         <EndGame
           newGame={newGame}
           player={player}
           draw={draw}
-          X_PLAYER={X_PLAYER}
-          O_PLAYER={O_PLAYER}
+          X_PLAYER={X_PLAYER_NAME}
+          O_PLAYER={O_PLAYER_NAME}
         />
       )}
       <Square clickedArray={grid} handleClick={handleClick} />

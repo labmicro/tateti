@@ -31,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/empezar", indexRouter);
+app.use("/movimiento", indexRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
