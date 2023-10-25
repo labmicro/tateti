@@ -8,16 +8,6 @@ const O_PLAYER = "O";
 const X_PLAYER_NAME = "Juan";
 const O_PLAYER_NAME = "Pedro";
 
-const winCombination = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
 const TicTacToe = () => {
   const [grid, setGrid] = useState(Array(9).fill(INITIAL));
   const [player, setPlayer] = useState(false);
@@ -27,7 +17,7 @@ const TicTacToe = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await empezar([O_PLAYER_NAME, O_PLAYER_NAME]);
+      await empezar([O_PLAYER_NAME, X_PLAYER_NAME]);
       setIsLoaded(true);
     };
     fetchData();
@@ -37,7 +27,7 @@ const TicTacToe = () => {
     setGrid(Array(9).fill(INITIAL));
     setGameFinished(false);
     setDraw(false);
-    empezar([O_PLAYER_NAME, O_PLAYER_NAME]);
+    empezar([O_PLAYER_NAME, X_PLAYER_NAME]);
   };
 
   const handleClick = async (id) => {
