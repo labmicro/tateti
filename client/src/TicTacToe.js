@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import Square from "./Square";
 import EndGame from "./EndGame";
 import { empezar, movimiento } from "./apiCalls";
-const INITIAL = "";
-const X_PLAYER = "X";
-const O_PLAYER = "O";
+const INITIAL = " ";
 const X_PLAYER_NAME = "Juan";
 const O_PLAYER_NAME = "Pedro";
 
@@ -33,19 +31,7 @@ const TicTacToe = () => {
   const handleClick = async (id) => {
     const result = await movimiento(id % 3, Math.floor(id / 3));
     isGameOver(result);
-    setGrid(
-      grid.map((item, index) => {
-        if (index === id) {
-          if (player) {
-            return X_PLAYER;
-          } else {
-            return O_PLAYER;
-          }
-        } else {
-          return item;
-        }
-      })
-    );
+    setGrid(result.tablero.flat());
     setPlayer(!player);
   };
   const isGameOver = (result) => {

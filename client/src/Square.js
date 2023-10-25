@@ -2,7 +2,7 @@ const Square = ({ clickedArray, handleClick }) => {
   return (
     <div className="board">
       {clickedArray.map((item, index) => {
-        if (item === "") {
+        if (item === " ") {
           return (
             <div
               key={index}
