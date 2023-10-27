@@ -49,6 +49,41 @@ npm install --save-dev @cucumber/cucumber pactum
   },
 ```
 
+6. Instalar las herramientas para las pruebas de sistema de integración
+
+```bash
+npm install --save-dev selenium-webdriver
+```
+
+7. Cambiar el nombre de la carpeta `features/support` por `features/backend`
+
+8. Crear el archivo de configuración `cucumber.json` para definir un nuevo perfil
+
+```json
+{
+   "default": {
+      "import": ["features/integration/*.js"]
+   },
+   "backend": {
+      "import": ["features/backend/*.js"]
+   }
+}
+```
+
+9. Modificar el archivo `package.json` para agregar el comando de pruebas de integración y corregir el comando para las pruebas de backend
+
+```json
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "mocha --reporter spec",
+    "test-backend": "cucumber-js -p backend",
+    "integration": "cucumber-js",
+    "coverage": "nyc --reporter=html mocha"
+  },
+```
+
+10. Crear la carpeta `features/integration` para ubicar el archivo con la las definiciones de los pasos y un archivo adicional de soporte que instancia el navegador antes de cada prueba.
+
 ## Ejecución de las pruebas 
 
 1. Para ejecutar las pruebas unitarias con mocha
@@ -73,7 +108,19 @@ npm install --save-dev @cucumber/cucumber pactum
       ```bash
       npm run test-backend
       ```
-  
+
+4. Para ejecutar las pruebas de sistema de integración
+   
+   1. En una consola iniciar el servidor con el comando
+      ```bash
+      npm start
+      ```
+
+   2. En una segunda consola ejecutar las pruebas con el comando
+      ```bash
+      npm run integration
+      ```
+
 ## Ejecucion de los servidores
 
 1. Luego de clonar el repositorio ejecutar para inicializar el frontend:

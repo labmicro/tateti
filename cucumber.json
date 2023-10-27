@@ -1,0 +1,8 @@
+{
+  "default": {
+    "import": ["features/integration/*.js"]
+  },
+  "backend": {
+    "import": ["features/backend/*.js"]
+  }
+}
